@@ -203,7 +203,7 @@ void CHudRadar::UserCmd_ShowRadar()
 	m_iFlags |= HUD_DRAW;
 }
 
-int CHudRadar::MsgFunc_Radar(const char *pszName,  int iSize, void *pbuf )
+DLLEXPORT int CHudRadar::MsgFunc_Radar(const char* pszName, int iSize, void* pbuf)
 {
 	BufferReader reader( pszName, pbuf, iSize );
 

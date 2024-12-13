@@ -340,7 +340,7 @@ public:
 	CHudUserCmd(ShowScoreboard2);
 	CHudUserCmd(HideScoreboard2);
 
-	CHudMsgFunc(ScoreInfo);
+	DLLEXPORT CHudMsgFunc(ScoreInfo);
 	CHudMsgFunc(TeamInfo);
 	CHudMsgFunc(TeamScore);
 	CHudMsgFunc(TeamNames);
@@ -698,7 +698,7 @@ public:
 	int Init( void );
 	int VidInit( void );
 	int Draw( float flTime );
-	CHudMsgFunc(Money);
+	DLLEXPORT CHudMsgFunc(Money);
 	CHudMsgFunc(BlinkAcct);
 
 private:
@@ -1024,10 +1024,10 @@ public:
 	CHudMsgFunc(Damage);
 	CHudMsgFunc(GameMode);
 	CHudMsgFunc(Logo);
-	CHudMsgFunc(ResetHUD);
+	DLLEXPORT CHudMsgFunc(ResetHUD);
 	CHudMsgFunc(InitHUD);
 	CHudMsgFunc(ViewMode);
-	CHudMsgFunc(SetFOV);
+	DLLEXPORT CHudMsgFunc(SetFOV);
 	CHudMsgFunc(Concuss);
 	CHudMsgFunc(ShadowIdx);
 	CHudMsgFunc(ServerName);

@@ -67,7 +67,7 @@ static entvars_t	ev[ 32 ];
 static int			num_ents = 0;
 
 // The entity we'll use to represent the local client
-static CBasePlayer	player;
+CBasePlayer	player;
 
 // Local version of game .dll global variables ( time, etc. )
 static globalvars_t	Globals = { };

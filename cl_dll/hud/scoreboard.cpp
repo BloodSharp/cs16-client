@@ -444,7 +444,7 @@ void CHudScoreboard :: GetAllPlayersInfo( void )
 	}
 }
 
-int CHudScoreboard :: MsgFunc_ScoreInfo( const char *pszName, int iSize, void *pbuf )
+DLLEXPORT int CHudScoreboard::MsgFunc_ScoreInfo(const char* pszName, int iSize, void* pbuf)
 {
 	m_iFlags |= HUD_DRAW;
 

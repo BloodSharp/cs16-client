@@ -128,7 +128,7 @@ int CHudHealth::VidInit(void)
 	return 1;
 }
 
-int CHudHealth:: MsgFunc_Health(const char *pszName,  int iSize, void *pbuf )
+extern "C" DLLEXPORT int DLLEXPORT CHudHealth::MsgFunc_Health(const char* pszName, int iSize, void* pbuf)
 {
 	// TODO: update local health data
 	BufferReader reader( pszName, pbuf, iSize );
@@ -177,7 +177,7 @@ int CHudHealth:: MsgFunc_Damage(const char *pszName,  int iSize, void *pbuf )
 	return 1;
 }
 
-int CHudHealth:: MsgFunc_ScoreAttrib(const char *pszName,  int iSize, void *pbuf )
+DLLEXPORT int CHudHealth::MsgFunc_ScoreAttrib(const char* pszName, int iSize, void* pbuf)
 {
 	BufferReader reader( pszName, pbuf, iSize );
 

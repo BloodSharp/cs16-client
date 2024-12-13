@@ -143,7 +143,7 @@ int CHudMoney::Draw(float flTime)
 	return 1;
 }
 
-int CHudMoney::MsgFunc_Money(const char *pszName, int iSize, void *pbuf)
+DLLEXPORT int CHudMoney::MsgFunc_Money(const char* pszName, int iSize, void* pbuf)
 {
 	BufferReader buf( pszName, pbuf, iSize );
 	int iOldCount = m_iMoneyCount;

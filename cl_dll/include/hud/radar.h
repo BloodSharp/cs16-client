@@ -18,7 +18,7 @@ public:
 	virtual void Reset();
 	virtual void Shutdown();
 
-	int MsgFunc_Radar(const char *pszName,  int iSize, void *pbuf);
+	DLLEXPORT int MsgFunc_Radar(const char *pszName,  int iSize, void *pbuf);
 
 	void UserCmd_ShowRadar();
 	void UserCmd_HideRadar();

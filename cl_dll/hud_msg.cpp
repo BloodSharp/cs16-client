@@ -38,7 +38,7 @@ extern float g_flRoundTime;
 
 /// USER-DEFINED SERVER MESSAGE HANDLERS
 
-int CHud :: MsgFunc_ResetHUD(const char *pszName, int iSize, void *pbuf )
+DLLEXPORT int CHud::MsgFunc_ResetHUD(const char* pszName, int iSize, void* pbuf)
 {
 	// clear all hud data
 	HUDLIST *pList = m_pHudList;

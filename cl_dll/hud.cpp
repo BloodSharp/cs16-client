@@ -550,7 +550,7 @@ float HUD_GetFOV( void )
 	return g_lastFOV;
 }
 
-int CHud::MsgFunc_SetFOV(const char *pszName,  int iSize, void *pbuf)
+DLLEXPORT int CHud::MsgFunc_SetFOV(const char* pszName, int iSize, void* pbuf)
 {
 	//Weapon prediction already takes care of changing the fog. ( g_lastFOV ).
 #if 0 // VALVEWHY: original client checks for "tfc" here.

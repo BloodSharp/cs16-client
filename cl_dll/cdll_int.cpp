@@ -407,59 +407,59 @@ extern "C" int DLLEXPORT HUD_GetPlayerTeam(int iplayer)
 
 cldll_func_dst_t *g_pcldstAddrs;
 
+cldll_func_t cldll_func =
+{
+Initialize,
+HUD_Init,
+HUD_VidInit,
+HUD_Redraw,
+HUD_UpdateClientData,
+HUD_Reset,
+HUD_PlayerMove,
+HUD_PlayerMoveInit,
+HUD_PlayerMoveTexture,
+IN_ActivateMouse,
+IN_DeactivateMouse,
+IN_MouseEvent,
+IN_ClearStates,
+IN_Accumulate,
+CL_CreateMove,
+CL_IsThirdPerson,
+CL_CameraOffset,
+KB_Find,
+CAM_Think,
+V_CalcRefdef,
+HUD_AddEntity,
+HUD_CreateEntities,
+HUD_DrawNormalTriangles,
+HUD_DrawTransparentTriangles,
+HUD_StudioEvent,
+HUD_PostRunCmd,
+HUD_Shutdown,
+HUD_TxferLocalOverrides,
+HUD_ProcessPlayerState,
+HUD_TxferPredictionData,
+Demo_ReadBuffer,
+HUD_ConnectionlessPacket,
+HUD_GetHullBounds,
+HUD_Frame,
+HUD_Key_Event,
+HUD_TempEntUpdate,
+HUD_GetUserEntity,
+HUD_VoiceStatus,
+HUD_DirectorMessage,
+HUD_GetStudioModelInterface,
+HUD_ChatInputPosition,
+HUD_GetPlayerTeam,
+NULL
+};
+
 extern "C" void DLLEXPORT F(void *pv)
 {
 	cldll_func_t *pcldll_func = (cldll_func_t *)pv;
 
 	// Hack!
 	g_pcldstAddrs = ((cldll_func_dst_t *)pcldll_func->pHudVidInitFunc);
-
-	cldll_func_t cldll_func =
-	{
-	Initialize,
-	HUD_Init,
-	HUD_VidInit,
-	HUD_Redraw,
-	HUD_UpdateClientData,
-	HUD_Reset,
-	HUD_PlayerMove,
-	HUD_PlayerMoveInit,
-	HUD_PlayerMoveTexture,
-	IN_ActivateMouse,
-	IN_DeactivateMouse,
-	IN_MouseEvent,
-	IN_ClearStates,
-	IN_Accumulate,
-	CL_CreateMove,
-	CL_IsThirdPerson,
-	CL_CameraOffset,
-	KB_Find,
-	CAM_Think,
-	V_CalcRefdef,
-	HUD_AddEntity,
-	HUD_CreateEntities,
-	HUD_DrawNormalTriangles,
-	HUD_DrawTransparentTriangles,
-	HUD_StudioEvent,
-	HUD_PostRunCmd,
-	HUD_Shutdown,
-	HUD_TxferLocalOverrides,
-	HUD_ProcessPlayerState,
-	HUD_TxferPredictionData,
-	Demo_ReadBuffer,
-	HUD_ConnectionlessPacket,
-	HUD_GetHullBounds,
-	HUD_Frame,
-	HUD_Key_Event,
-	HUD_TempEntUpdate,
-	HUD_GetUserEntity,
-	HUD_VoiceStatus,
-	HUD_DirectorMessage,
-	HUD_GetStudioModelInterface,
-	HUD_ChatInputPosition,
-	HUD_GetPlayerTeam,
-	NULL
-	};
 
 	*pcldll_func = cldll_func;
 }
@@ -510,3 +510,61 @@ public:
 
 EXPOSE_SINGLE_INTERFACE(CClientExports, IGameClientExports, GAMECLIENTEXPORTS_INTERFACE_VERSION)
 
+#include "GameStudioModelRenderer.h"
+extern CGameStudioModelRenderer g_StudioRenderer;
+#include "r_studioint.h"
+extern engine_studio_api_t IEngineStudio;
+extern class CBasePlayer player;
+
+extern "C" void DLLEXPORT XashClientExportForCounterStrike16Mods(
+	void** pClientFunctions,
+	void** pEngineFunctions,
+	void** pEngineStudio,
+	void** pStudioRender,
+	void** pBasePlayer
+	/*,
+	void** pScoreAttrib,
+	void** pRadar,
+	void** pScoreInfo,
+	void** pHealthInfo,
+	void** pAccount,
+	void** pResetHUD,
+	void** pSetFOV
+	*/
+	)
+{
+	int (CHudHealth:: * pMsgFunc_ScoreAttrib)(const char* pszName, int iSize, void* pbuf) = &CHudHealth::MsgFunc_ScoreAttrib;
+	int (CHudRadar:: * pMsgFunc_Radar)(const char* pszName, int iSize, void* pbuf) = &CHudRadar::MsgFunc_Radar;
+	int (CHudScoreboard:: * pMsgFunc_ScoreInfo)(const char* pszName, int iSize, void* pbuf) = &CHudScoreboard::MsgFunc_ScoreInfo;
+	int (CHudHealth:: * pMsgFunc_Health)(const char* pszName, int iSize, void* pbuf) = &CHudHealth::MsgFunc_Health;
+	int (CHudMoney:: * pMsgFunc_Money)(const char* pszName, int iSize, void* pbuf) = &CHudMoney::MsgFunc_Money;
+	int (CHud:: * pMsgFunc_ResetHUD)(const char* pszName, int iSize, void* pbuf) = &CHud::MsgFunc_ResetHUD;
+	int (CHud:: * pMsgFunc_SetFOV)(const char* pszName, int iSize, void* pbuf) = &CHud::MsgFunc_SetFOV;
+
+	if (pClientFunctions)
+		*pClientFunctions = (void*)&cldll_func;
+	if (pEngineFunctions)
+		*pEngineFunctions = (void*)&gEngfuncs;
+	if (pEngineStudio)
+		*pEngineStudio = (void*)&IEngineStudio;
+	if (pStudioRender)
+		*pStudioRender = (void*)&g_StudioRenderer;
+	if (pBasePlayer)
+		*pBasePlayer = (void*)&player;
+	/*
+	if (pScoreAttrib)
+		*pScoreAttrib = &(void*&)pMsgFunc_ScoreAttrib;
+	if (pRadar)
+		*pRadar = &(void*&)pMsgFunc_Radar;
+	if (pScoreInfo)
+		*pScoreInfo = &(void*&)pMsgFunc_ScoreInfo;
+	if (pHealthInfo)
+		*pHealthInfo = &(void*&)pMsgFunc_Health;
+	if (pAccount)
+		*pAccount = &(void*&)pMsgFunc_Money;
+	if (pResetHUD)
+		*pResetHUD = &(void*&)pMsgFunc_ResetHUD;
+	if (pSetFOV)
+		*pSetFOV = &(void*&)pMsgFunc_SetFOV;
+	*/
+}
