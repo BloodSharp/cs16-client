@@ -72,7 +72,7 @@ CBasePlayer	player;
 // Local version of game .dll global variables ( time, etc. )
 static globalvars_t	Globals = { };
 
-static CBasePlayerWeapon *g_pWpns[ 32 ];
+CBasePlayerWeapon *g_pWpns[ 32 ];
 
 
 // CS Weapon placeholder entities
