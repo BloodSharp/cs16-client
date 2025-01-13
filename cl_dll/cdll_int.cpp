@@ -515,13 +515,15 @@ extern CGameStudioModelRenderer g_StudioRenderer;
 #include "r_studioint.h"
 extern engine_studio_api_t IEngineStudio;
 extern class CBasePlayer player;
+extern class CBasePlayerWeapon* g_pWpns[32];
 
 extern "C" void DLLEXPORT XashClientExportForCounterStrike16Mods(
 	void** pClientFunctions,
 	void** pEngineFunctions,
 	void** pEngineStudio,
 	void** pStudioRender,
-	void** pBasePlayer
+	void** pBasePlayer,
+	void** pBaseWeapon
 	/*,
 	void** pScoreAttrib,
 	void** pRadar,
@@ -551,6 +553,8 @@ extern "C" void DLLEXPORT XashClientExportForCounterStrike16Mods(
 		*pStudioRender = (void*)&g_StudioRenderer;
 	if (pBasePlayer)
 		*pBasePlayer = (void*)&player;
+	if (pBaseWeapon)
+		*pBaseWeapon = (void*)g_pWpns;
 	/*
 	if (pScoreAttrib)
 		*pScoreAttrib = &(void*&)pMsgFunc_ScoreAttrib;
